@@ -6,6 +6,7 @@ for a few examples of how to use the framework.
 ## building
 
 Uses GNAT make.
+
 * `make all` to create a release build.
 * `make debug` for a debug build.
 * `make test` to build the test bots in `examples/`. Placed into `examples/bin`.
