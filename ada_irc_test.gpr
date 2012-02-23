@@ -1,0 +1,14 @@
+with "ada_irc.gpr";
+
+project Ada_Irc_Test is
+
+   for Object_Dir use "examples/bin";
+   for Exec_Dir use "examples/bin";
+   for Source_Dirs use ("examples/");
+   for Main use ("pong_bot.adb", "host_bot.adb");
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnat05", "-gnatVa", "-gnatyy", "-gnatE", "-gnatf", "-g");
+   end Compiler;
+
+end Ada_Irc_Test;

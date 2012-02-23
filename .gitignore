@@ -1,0 +1,8 @@
+*.ali
+*.o
+lib/*
+!lib/.gitignore
+build/*
+!build/.gitignore
+examples/bin/*
+!examples/bin/.gitignore
