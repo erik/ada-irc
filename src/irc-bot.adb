@@ -1,3 +1,5 @@
+with Ada.Text_IO;
+
 package body Irc.Bot is
 
    function Create (Server : String;
@@ -281,7 +283,6 @@ package body Irc.Bot is
    procedure Privmsg_Command_Hook (This : in out Connection;
                                    Msg  :        Message.Message) is
       use Regexp;
-      use SF;
 
       Pair : Command_Pair;
       Matches : Regexp.Match_Array (0 .. 1);
@@ -293,7 +294,10 @@ package body Irc.Bot is
          Pair := This.Privmsg_Commands.Element (Index => I);
 
          Regexp.Match (Pair.Regex,
-                       Str (SF.Index (Str, ":", Str'First) + 1 .. Str'Last),
+                       SU.Slice
+                         (Msg.Args,
+                          SU.Index (Msg.Args, ":") + 1,
+                          SU.Length (Msg.Args)),
                        Matches);
 
          if Matches (0) /= Regexp.No_Match then
