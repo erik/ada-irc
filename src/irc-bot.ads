@@ -1,5 +1,5 @@
---  This file implements the main object used by the library, as well
---  as several functions to manipulate it.
+--  This package implements the main object used by the library, as
+--  well as several functions to manipulate it.
 
 with GNAT.Sockets;
 with GNAT.Regpat;

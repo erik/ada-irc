@@ -1,3 +1,5 @@
+with Ada.Text_IO;
+
 package body Irc.Message is
 
    function Parse_Line (Line : in SU.Unbounded_String) return Message is
@@ -60,23 +62,16 @@ package body Irc.Message is
 
 
    procedure Parse_Privmsg (Msg : in out Message) is
-
-      Args   : String
-        := SU.To_String (Msg.Args);
-
-      Target : String
-        := Args (Args'First .. SF.Index (Args, " ", Args'First) - 1);
-
-      Content : String
-        := Args (SF.Index (Args, ":", Args'First) ..  Args'Last);
-
    begin
 
-      Msg.Privmsg.Target  := SU.To_Unbounded_String (Target);
-      Msg.Privmsg.Content := SU.To_Unbounded_String (Content);
+      Msg.Privmsg.Target  := SU.Unbounded_Slice
+        (Msg.Args, 1, SU.Index (Msg.Args, " ") - 1);
 
-      --  not a channel message
-      if Target (Target'First) /= '#' then
+      Msg.Privmsg.Content := SU.Unbounded_Slice
+        (Msg.Args, SU.Index (Msg.Args, ":"), SU.Length (Msg.Args));
+
+      --  message sent to nick directly instead of in a channel
+      if SU.To_String (Msg.Privmsg.Target) (1) /= '#' then
          Msg.Privmsg.Target := SU.To_Unbounded_String
            (SU.Slice (Msg.Sender, 1, SU.Index (Msg.Sender, "!") - 1));
       end if;
